@@ -3,8 +3,26 @@ package main
 import (
   "fmt"
   "os"
+  "strings"
   "github.com/garyburd/redigo/redis"
 )
+
+func colorize(msg string) string {
+  green := "%{[32m%}"
+  yellow := "%{[1;33m%}"
+  red := "%{[31m%}"
+  reset := "%{[00m%}"
+
+  if strings.Contains(msg, "success") {
+    return green + msg + reset
+  } else if strings.Contains(msg, "pending") {
+    return yellow + msg + reset
+  } else if strings.Contains(msg, "error") {
+    return red + msg + reset
+  } else {
+    return msg
+  }
+}
 
 func main() {
   ref := os.Args[1]
@@ -27,7 +45,7 @@ func main() {
   status, _ := c.Do("GET", key)
 
   if status != nil {
-    fmt.Printf("%s", status)
+    fmt.Printf("%s", colorize(fmt.Sprintf("%s", status)))
   }
 
   c.Do("PUBLISH", "hub-status", fmt.Sprintf("{ \"ref\": \"%s\", \"dir\": \"%s\" }", ref, dir))
