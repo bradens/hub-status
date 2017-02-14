@@ -14,11 +14,11 @@ func colorize(msg string) string {
   reset := "%{[00m%}"
 
   if strings.Contains(msg, "success") {
-    return green + msg + reset
+    return green + "✓" + reset
   } else if strings.Contains(msg, "pending") {
-    return yellow + msg + reset
+    return yellow + "…" + reset
   } else if strings.Contains(msg, "error") {
-    return red + msg + reset
+    return red + "ⅹ" + reset
   } else {
     return msg
   }
