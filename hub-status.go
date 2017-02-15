@@ -17,7 +17,7 @@ func colorize(msg string) string {
     return green + "✓" + reset
   } else if strings.Contains(msg, "pending") {
     return yellow + "…" + reset
-  } else if strings.Contains(msg, "error") {
+  } else if strings.Contains(msg, "failure") {
     return red + "ⅹ" + reset
   } else {
     return msg
